@@ -1,0 +1,177 @@
+@model AcxiomCRM.Models.Opportunity
+
+@{
+    ViewData["Title"] = "Opportunity Details";
+}
+
+<div class="container">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Opportunity Details</h1>
+        <p class="text-muted">
+            View complete opportunity information
+        </p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <strong>Opportunity Name</strong>
+                    <p class="form-control-plaintext">
+                        @Model.Name
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Company</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.Company ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Amount</strong>
+                    <p class="form-control-plaintext">
+                        ₹@Model.Amount.ToString("N2")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Probability</strong>
+                    <p class="form-control-plaintext">
+                        @Model.Probability%
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Stage</strong>
+                    <p>
+                        @if (Model.Stage == "Prospecting")
+                        {
+                            <span class="badge bg-primary">
+                                Prospecting
+                            </span>
+                        }
+                        else if (Model.Stage == "Qualification")
+                        {
+                            <span class="badge bg-info">
+                                Qualification
+                            </span>
+                        }
+                        else if (Model.Stage == "Proposal")
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Proposal
+                            </span>
+                        }
+                        else if (Model.Stage == "Negotiation")
+                        {
+                            <span class="badge bg-secondary">
+                                Negotiation
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-dark">
+                                Closed
+                            </span>
+                        }
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Status</strong>
+                    <p>
+                        @if (Model.Status == "Open")
+                        {
+                            <span class="badge bg-primary">
+                                Open
+                            </span>
+                        }
+                        else if (Model.Status == "Won")
+                        {
+                            <span class="badge bg-success">
+                                Won
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Lost
+                            </span>
+                        }
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Expected Close Date</strong>
+                    <p class="form-control-plaintext">
+                        @Model.ExpectedCloseDate
+                            .ToLocalTime()
+                            .ToString("dd MMM yyyy")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Customer ID</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.CustomerId?.ToString() ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Lead ID</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.LeadId?.ToString() ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Created Date</strong>
+                    <p class="form-control-plaintext">
+                        @Model.CreatedDate
+                            .ToLocalTime()
+                            .ToString("dd MMM yyyy, hh:mm tt")
+                    </p>
+                </div>
+
+                @if (Model.UpdatedDate.HasValue)
+                {
+                    <div class="col-md-6 mb-3">
+                        <strong>Last Updated</strong>
+                        <p class="form-control-plaintext">
+                            @Model.UpdatedDate.Value
+                                .ToLocalTime()
+                                .ToString("dd MMM yyyy, hh:mm tt")
+                        </p>
+                    </div>
+                }
+
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-primary">
+                    Edit Opportunity
+                </a>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Back to Opportunities
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

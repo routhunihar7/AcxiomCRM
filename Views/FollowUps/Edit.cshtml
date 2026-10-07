@@ -1,0 +1,174 @@
+@model AcxiomCRM.Models.FollowUp
+
+@{
+    ViewData["Title"] = "Edit Follow-Up";
+}
+
+<div class="container">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Edit Follow-Up</h1>
+        <p class="text-muted">
+            Update follow-up information
+        </p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <form asp-action="Edit" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="Id" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <div class="row">
+
+                    <!-- Title -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Title"
+                               class="form-label">
+                            Follow-Up Title *
+                        </label>
+
+                        <input asp-for="Title"
+                               class="form-control" />
+
+                        <span asp-validation-for="Title"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Status"
+                               class="form-label">
+                            Status *
+                        </label>
+
+                        <select asp-for="Status"
+                                class="form-select">
+
+                            @foreach (var status in ViewBag.Statuses)
+                            {
+                                <option value="@status">
+                                    @status
+                                </option>
+                            }
+
+                        </select>
+
+                        <span asp-validation-for="Status"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FollowUpDate"
+                               class="form-label">
+                            Follow-Up Date *
+                        </label>
+
+                        <input asp-for="FollowUpDate"
+                               type="date"
+                               class="form-control" />
+
+                        <span asp-validation-for="FollowUpDate"
+                              class="text-danger"></span>
+
+                        <small class="text-muted">
+                            Planned follow-ups cannot have a past date.
+                        </small>
+                    </div>
+
+                    <!-- Assigned To -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AssignedTo"
+                               class="form-label">
+                            Assigned To
+                        </label>
+
+                        <input asp-for="AssignedTo"
+                               class="form-control" />
+
+                        <span asp-validation-for="AssignedTo"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!-- Customer -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="CustomerId"
+                               class="form-label">
+                            Customer ID
+                        </label>
+
+                        <input asp-for="CustomerId"
+                               type="number"
+                               class="form-control" />
+
+                        <span asp-validation-for="CustomerId"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!-- Lead -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="LeadId"
+                               class="form-label">
+                            Lead ID
+                        </label>
+
+                        <input asp-for="LeadId"
+                               type="number"
+                               class="form-control" />
+
+                        <span asp-validation-for="LeadId"
+                              class="text-danger"></span>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-12 mb-3">
+                        <label asp-for="Description"
+                               class="form-label">
+                            Description *
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="5"></textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Update Follow-Up
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

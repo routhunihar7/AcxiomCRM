@@ -1,0 +1,109 @@
+@model IEnumerable<AcxiomCRM.Models.Activity>
+
+@{
+    ViewData["Title"] = "Activities";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">Activities</h1>
+            <p class="text-muted mb-0">
+                Track customer and sales activities.
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Add Activity
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            @if (User.IsInRole("Admin") ||
+                                 User.IsInRole("Manager"))
+                            {
+                                <th>Action</th>
+                            }
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    @foreach (var activity in Model)
+                    {
+                        <tr>
+                            <td>@activity.Title</td>
+
+                            <td>
+                                <span class="badge bg-info">
+                                    @activity.ActivityType
+                                </span>
+                            </td>
+
+                            <td>
+                                @activity.Description
+                            </td>
+
+                            <td>
+                                @activity.ActivityDate.ToString("dd-MM-yyyy HH:mm")
+                            </td>
+
+                            <td>
+                                <span class="badge bg-success">
+                                    @activity.Status
+                                </span>
+                            </td>
+
+                            @if (User.IsInRole("Admin") ||
+                                 User.IsInRole("Manager"))
+                            {
+                                <td>
+                                    <form asp-action="Delete"
+                                          method="post"
+                                          onsubmit="return confirm('Delete this activity?');">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@activity.Id" />
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            }
+                        </tr>
+                    }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,204 @@
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">CRM Reports</h1>
+        <p class="text-muted">
+            Overview of customers, leads and opportunities.
+        </p>
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Customers</h6>
+                    <h2 class="fw-bold">
+                        @ViewBag.TotalCustomers
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Leads</h6>
+                    <h2 class="fw-bold">
+                        @ViewBag.TotalLeads
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Open Leads</h6>
+                    <h2 class="fw-bold">
+                        @ViewBag.OpenLeads
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Opportunities</h6>
+                    <h2 class="fw-bold">
+                        @ViewBag.TotalOpportunities
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Open Opportunities</h6>
+                    <h2 class="fw-bold">
+                        @ViewBag.OpenOpportunities
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Won</h6>
+                    <h2 class="fw-bold text-success">
+                        @ViewBag.WonOpportunities
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Lost</h6>
+                    <h2 class="fw-bold text-danger">
+                        @ViewBag.LostOpportunities
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Pipeline Value</h6>
+                    <h2 class="fw-bold">
+                        ₹@(((decimal)ViewBag.PipelineValue).ToString("N2"))
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header fw-bold">
+                    Lead Status Report
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @foreach (var item in ViewBag.LeadStatuses)
+                            {
+                                <tr>
+                                    <td>@item.Status</td>
+                                    <td>@item.Count</td>
+                                </tr>
+                            }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header fw-bold">
+                    Opportunity Status Report
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Count</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @foreach (var item in ViewBag.OpportunityStatuses)
+                            {
+                                <tr>
+                                    <td>@item.Status</td>
+                                    <td>@item.Count</td>
+                                    <td>
+                                        ₹@item.Amount.ToString("N2")
+                                    </td>
+                                </tr>
+                            }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

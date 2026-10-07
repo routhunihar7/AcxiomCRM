@@ -1,0 +1,264 @@
+@model IEnumerable<AcxiomCRM.Models.Opportunity>
+
+@{
+    ViewData["Title"] = "Opportunities";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">Opportunities</h1>
+            <p class="text-muted">
+                Manage and track your sales opportunities
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Add Opportunity
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <!-- Search and Filters -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <form asp-action="Index" method="get">
+
+                <div class="row g-2">
+
+                    <div class="col-md-5">
+                        <input type="text"
+                               name="search"
+                               value="@ViewBag.Search"
+                               class="form-control"
+                               placeholder="Search opportunity or company..." />
+                    </div>
+
+                    <div class="col-md-3">
+                        <select name="stage"
+                                class="form-select">
+
+                            <option value="">All Stages</option>
+
+                            @foreach (var stage in ViewBag.Stages)
+                            {
+                                <option value="@stage"
+                                        selected="@(ViewBag.Stage?.ToString() == stage ? "selected" : null)">
+                                    @stage
+                                </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select name="status"
+                                class="form-select">
+
+                            <option value="">All Statuses</option>
+
+                            @foreach (var status in ViewBag.Statuses)
+                            {
+                                <option value="@status"
+                                        selected="@(ViewBag.Status?.ToString() == status ? "selected" : null)">
+                                    @status
+                                </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit"
+                                class="btn btn-dark w-100">
+                            Search
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Opportunity Table -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+
+                    <h4>No opportunities found</h4>
+
+                    <p class="text-muted">
+                        Start by adding your first opportunity.
+                    </p>
+
+                    <a asp-action="Create"
+                       class="btn btn-primary">
+                        Add Opportunity
+                    </a>
+
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+                                <th>Name</th>
+                                <th>Company</th>
+                                <th>Amount</th>
+                                <th>Probability</th>
+                                <th>Stage</th>
+                                <th>Status</th>
+                                <th>Expected Close</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        @foreach (var opportunity in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        @opportunity.Name
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    @(opportunity.Company ?? "N/A")
+                                </td>
+
+                                <td>
+                                    ₹@opportunity.Amount.ToString("N2")
+                                </td>
+
+                                <td>
+                                    @opportunity.Probability%
+                                </td>
+
+                                <td>
+
+                                    @if (opportunity.Stage == "Prospecting")
+                                    {
+                                        <span class="badge bg-primary">
+                                            Prospecting
+                                        </span>
+                                    }
+                                    else if (opportunity.Stage == "Qualification")
+                                    {
+                                        <span class="badge bg-info">
+                                            Qualification
+                                        </span>
+                                    }
+                                    else if (opportunity.Stage == "Proposal")
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Proposal
+                                        </span>
+                                    }
+                                    else if (opportunity.Stage == "Negotiation")
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Negotiation
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-dark">
+                                            Closed
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td>
+
+                                    @if (opportunity.Status == "Open")
+                                    {
+                                        <span class="badge bg-primary">
+                                            Open
+                                        </span>
+                                    }
+                                    else if (opportunity.Status == "Won")
+                                    {
+                                        <span class="badge bg-success">
+                                            Won
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            Lost
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td>
+                                    @opportunity.ExpectedCloseDate
+                                        .ToLocalTime()
+                                        .ToString("dd MMM yyyy")
+                                </td>
+
+                                <td>
+
+                                    <div class="btn-group">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@opportunity.Id"
+                                           class="btn btn-sm btn-outline-info">
+                                            View
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@opportunity.Id"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@opportunity.Id"
+                                           class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

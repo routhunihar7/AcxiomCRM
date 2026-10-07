@@ -10,10 +10,12 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("dedf8cbc-5671-493b-8819-e467cbe82414")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("AcxiomCRM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bf76361205509a150b0d202a5162e9a2b8b9172")]
 [assembly: System.Reflection.AssemblyProductAttribute("AcxiomCRM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AcxiomCRM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,122 @@
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<div class="container">
+    <div class="mb-4">
+        <h1 class="fw-bold">Create User</h1>
+        <p class="text-muted">Create a CRM user and assign a role</p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <form asp-action="CreateUser" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <div class="row">
+
+                    <!-- Full Name -->
+                    <div class="col-md-6 mb-3">
+                        <label for="fullName" class="form-label">
+                            Full Name *
+                        </label>
+
+                        <input type="text"
+                               id="fullName"
+                               name="fullName"
+                               class="form-control"
+                               required
+                               maxlength="100" />
+
+                        <span class="text-danger">
+                            @Html.ValidationMessage("FullName")
+                        </span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">
+                            Email *
+                        </label>
+
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               class="form-control"
+                               required />
+
+                        <span class="text-danger">
+                            @Html.ValidationMessage("Email")
+                        </span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="col-md-6 mb-3">
+                        <label for="password" class="form-label">
+                            Password *
+                        </label>
+
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               class="form-control"
+                               required
+                               minlength="8" />
+
+                        <small class="text-muted">
+                            Password must satisfy the Identity password policy.
+                        </small>
+
+                        <span class="text-danger">
+                            @Html.ValidationMessage("Password")
+                        </span>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="col-md-6 mb-3">
+                        <label for="role" class="form-label">
+                            Role *
+                        </label>
+
+                        <select id="role"
+                                name="role"
+                                class="form-select"
+                                required>
+
+                            <option value="">-- Select Role --</option>
+
+                            @foreach (var role in ViewBag.Roles)
+                            {
+                                <option value="@role">
+                                    @role
+                                </option>
+                            }
+
+                        </select>
+
+                        <span class="text-danger">
+                            @Html.ValidationMessage("Role")
+                        </span>
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <button type="submit" class="btn btn-primary">
+                    Create User
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+        </div>
+    </div>
+</div>

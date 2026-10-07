@@ -1,0 +1,450 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+
+    <!-- ==========================================
+         HEADER
+         ========================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="fw-bold">CRM Dashboard</h1>
+
+            <p class="text-muted mb-0">
+                Welcome to AcxiomCRM
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         KPI CARDS - ROW 1
+         ========================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Total Customers -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Customers
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        @ViewBag.TotalCustomers
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Leads -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Leads
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        @ViewBag.TotalLeads
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Open Opportunities -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Open Opportunities
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        @ViewBag.OpenOpportunities
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Pipeline Value -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Pipeline Value
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        ₹@ViewBag.PipelineValue.ToString("N2")
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         KPI CARDS - ROW 2
+         ========================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Open Leads -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Open Leads
+                    </h6>
+
+                    <h3 class="fw-bold">
+                        @ViewBag.OpenLeads
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Opportunities -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Opportunities
+                    </h6>
+
+                    <h3 class="fw-bold">
+                        @ViewBag.TotalOpportunities
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Won -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Won
+                    </h6>
+
+                    <h3 class="fw-bold">
+                        @ViewBag.WonOpportunities
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Lost -->
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Lost
+                    </h6>
+
+                    <h3 class="fw-bold">
+                        @ViewBag.LostOpportunities
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         CHARTS ROW 1
+         ========================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Lead Status Chart -->
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        Lead Status
+                    </h5>
+
+                    <canvas id="leadStatusChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Opportunity Pipeline Chart -->
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        Opportunity Pipeline
+                    </h5>
+
+                    <canvas id="opportunityChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         MONTHLY SALES
+         ========================================== -->
+
+    <div class="row g-4">
+
+        <div class="col-12">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        Monthly Sales
+                    </h5>
+
+                    <canvas id="monthlySalesChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <!-- Chart.js -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <script>
+
+        // ==========================================
+        // LEAD STATUS CHART
+        // ==========================================
+
+        new Chart(
+            document.getElementById('leadStatusChart'),
+            {
+                type: 'doughnut',
+
+                data: {
+
+                    labels: [
+                        'New',
+                        'Contacted',
+                        'Qualified',
+                        'Converted',
+                        'Lost'
+                    ],
+
+                    datasets: [{
+                        label: 'Leads',
+
+                        data: [
+                            @ViewBag.NewLeads,
+                            @ViewBag.ContactedLeads,
+                            @ViewBag.QualifiedLeads,
+                            @ViewBag.ConvertedLeads,
+                            @ViewBag.LostLeads
+                        ]
+                    }]
+                },
+
+                options: {
+                    responsive: true
+                }
+            }
+        );
+
+
+        // ==========================================
+        // OPPORTUNITY PIPELINE CHART
+        // ==========================================
+
+        new Chart(
+            document.getElementById('opportunityChart'),
+            {
+                type: 'bar',
+
+                data: {
+
+                    labels: [
+                        'Prospecting',
+                        'Qualification',
+                        'Proposal',
+                        'Negotiation',
+                        'Closed'
+                    ],
+
+                    datasets: [{
+                        label: 'Opportunities',
+
+                        data: [
+                            @ViewBag.ProspectingOpportunities,
+                            @ViewBag.QualificationOpportunities,
+                            @ViewBag.ProposalOpportunities,
+                            @ViewBag.NegotiationOpportunities,
+                            @ViewBag.ClosedOpportunities
+                        ]
+                    }]
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    scales: {
+
+                        y: {
+                            beginAtZero: true
+                        }
+
+                    }
+                }
+            }
+        );
+
+
+        // ==========================================
+        // MONTHLY SALES CHART
+        // ==========================================
+
+        new Chart(
+            document.getElementById('monthlySalesChart'),
+            {
+                type: 'line',
+
+                data: {
+
+                    labels: [
+                        @foreach (var label in ViewBag.MonthlySalesLabels)
+                        {
+                            <text>'@label',</text>
+                        }
+                    ],
+
+                    datasets: [{
+
+                        label: 'Monthly Sales',
+
+                        data: [
+                            @foreach (var value in ViewBag.MonthlySalesValues)
+                            {
+                                <text>@value,</text>
+                            }
+                        ],
+
+                        tension: 0.3,
+
+                        fill: false
+                    }]
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    scales: {
+
+                        y: {
+                            beginAtZero: true
+                        }
+
+                    }
+                }
+            }
+        );
+
+    </script>
+}

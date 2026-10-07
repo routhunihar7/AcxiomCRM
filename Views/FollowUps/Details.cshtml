@@ -1,0 +1,128 @@
+@model AcxiomCRM.Models.FollowUp
+
+@{
+    ViewData["Title"] = "Follow-Up Details";
+}
+
+<div class="container">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Follow-Up Details</h1>
+        <p class="text-muted">
+            View complete follow-up information
+        </p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <strong>Follow-Up Title</strong>
+                    <p class="form-control-plaintext">
+                        @Model.Title
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Status</strong>
+                    <p>
+                        @if (Model.Status == "Planned")
+                        {
+                            <span class="badge bg-primary">Planned</span>
+                        }
+                        else if (Model.Status == "Completed")
+                        {
+                            <span class="badge bg-success">Completed</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Cancelled</span>
+                        }
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Follow-Up Date</strong>
+                    <p class="form-control-plaintext">
+                        @Model.FollowUpDate
+                            .ToLocalTime()
+                            .ToString("dd MMM yyyy")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Assigned To</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.AssignedTo ?? "Not Assigned")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Customer ID</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.CustomerId?.ToString() ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Lead ID</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.LeadId?.ToString() ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <strong>Description</strong>
+                    <div class="border rounded p-3 bg-light">
+                        @Model.Description
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Created Date</strong>
+                    <p class="form-control-plaintext">
+                        @Model.CreatedDate
+                            .ToLocalTime()
+                            .ToString("dd MMM yyyy, hh:mm tt")
+                    </p>
+                </div>
+
+                @if (Model.UpdatedDate.HasValue)
+                {
+                    <div class="col-md-6 mb-3">
+                        <strong>Last Updated</strong>
+                        <p class="form-control-plaintext">
+                            @Model.UpdatedDate.Value
+                                .ToLocalTime()
+                                .ToString("dd MMM yyyy, hh:mm tt")
+                        </p>
+                    </div>
+                }
+
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-primary">
+                    Edit Follow-Up
+                </a>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Back to Follow-Ups
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

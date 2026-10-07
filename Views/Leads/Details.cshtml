@@ -1,0 +1,129 @@
+@model AcxiomCRM.Models.Lead
+
+@{
+    ViewData["Title"] = "Lead Details";
+}
+
+<div class="container">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Lead Details</h1>
+        <p class="text-muted">View complete lead information</p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <strong>Lead Name</strong>
+                    <p class="form-control-plaintext">
+                        @Model.Name
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Company</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.Company ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Email</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.Email ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Phone</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.Phone ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Status</strong>
+                    <p>
+                        @if (Model.Status == "New")
+                        {
+                            <span class="badge bg-primary">New</span>
+                        }
+                        else if (Model.Status == "Contacted")
+                        {
+                            <span class="badge bg-info">Contacted</span>
+                        }
+                        else if (Model.Status == "Qualified")
+                        {
+                            <span class="badge bg-warning text-dark">Qualified</span>
+                        }
+                        else if (Model.Status == "Converted")
+                        {
+                            <span class="badge bg-success">Converted</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Lost</span>
+                        }
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Expected Value</strong>
+                    <p class="form-control-plaintext">
+                        ₹@Model.ExpectedValue.ToString("N2")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Lead Source</strong>
+                    <p class="form-control-plaintext">
+                        @(Model.Source ?? "N/A")
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Created Date</strong>
+                    <p class="form-control-plaintext">
+                        @Model.CreatedDate.ToLocalTime()
+                            .ToString("dd MMM yyyy, hh:mm tt")
+                    </p>
+                </div>
+
+                @if (Model.UpdatedDate.HasValue)
+                {
+                    <div class="col-md-6 mb-3">
+                        <strong>Last Updated</strong>
+                        <p class="form-control-plaintext">
+                            @Model.UpdatedDate.Value
+                                .ToLocalTime()
+                                .ToString("dd MMM yyyy, hh:mm tt")
+                        </p>
+                    </div>
+                }
+
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-primary">
+                    Edit Lead
+                </a>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Back to Leads
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

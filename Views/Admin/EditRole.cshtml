@@ -1,0 +1,96 @@
+@model AcxiomCRM.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Edit User Role";
+}
+
+<div class="container">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Edit User Role</h1>
+        <p class="text-muted">
+            Assign a CRM role to this user
+        </p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+                    <strong>Full Name</strong>
+                    <p class="form-control-plaintext">
+                        @Model.FullName
+                    </p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Email</strong>
+                    <p class="form-control-plaintext">
+                        @Model.Email
+                    </p>
+                </div>
+
+            </div>
+
+            <form asp-action="EditRole" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="id"
+                       value="@Model.Id" />
+
+                <div class="mb-4">
+
+                    <label for="role"
+                           class="form-label">
+                        Select Role *
+                    </label>
+
+                    <select name="role"
+                            id="role"
+                            class="form-select">
+
+                        @foreach (var role in ViewBag.Roles)
+                        {
+                            if (ViewBag.CurrentRole == role)
+                            {
+                                <option value="@role"
+                                        selected>
+                                    @role
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@role">
+                                    @role
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Update Role
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

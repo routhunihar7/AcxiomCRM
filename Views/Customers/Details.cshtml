@@ -1,0 +1,95 @@
+@model AcxiomCRM.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">Customer Details</h1>
+            <p class="text-muted">View customer information</p>
+        </div>
+
+        <div>
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-primary">
+                Edit Customer
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back to Customers
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body p-4">
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">Customer Name</h6>
+                    <h4>@Model.Name</h4>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">Company</h6>
+                    <h4>@Model.Company</h4>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">Email</h6>
+                    <p>@Model.Email</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">Phone</h6>
+                    <p>@Model.Phone</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">City</h6>
+                    <p>@Model.City</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">Country</h6>
+                    <p>@Model.Country</p>
+                </div>
+
+                <div class="col-12">
+                    <h6 class="text-muted">Address</h6>
+                    <p>@Model.Address</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">Created Date</h6>
+                    <p>
+                        @Model.CreatedDate.ToLocalTime()
+                            .ToString("dd MMM yyyy HH:mm")
+                    </p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted">Last Updated</h6>
+                    <p>
+                        @(Model.UpdatedDate.HasValue
+                            ? Model.UpdatedDate.Value
+                                .ToLocalTime()
+                                .ToString("dd MMM yyyy HH:mm")
+                            : "Not updated")
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
